@@ -1,5 +1,5 @@
 """
-WSGI config for Project_JG_MB project.
+WSGI config for Project_RSwTA project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Project_JG_MB.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'Project_RSwTA.settings')
 
 application = get_wsgi_application()
