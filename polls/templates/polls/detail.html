@@ -19,9 +19,9 @@
 
 <form action="{% url 'polls:vote' kraj.idKraj %}" method="post">
 {% csrf_token %}
-{% for choice in kraj.adres_zamieszkania_set.all %}
-	<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{choice.idKraj}}" />
-	<label for="choice{{ forloop.counter }}">{{ choice.ulica }}</label><br />
+{% for adres in kraj.adres_zamieszkania_set.all %}
+    <input type="radio" name="adres" id="adres{{ forloop.counter }}" value="{{ adres.id }}" />
+    <label for="adres{{ forloop.counter }}">{{ adres.ulica }}</label><br />
 {% endfor %}
-<input type="submit", value="Vote" />
+<input type="submit" value="Vote" />
 </form>
