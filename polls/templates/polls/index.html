@@ -1,7 +1,7 @@
 {% if latest_kraj_list %}
 	<ul>
 	{% for kraj in latest_kraj_list %}
-		<li><a href="{% url 'detail' kraj.idKraj %}">{{ kraj.nazwa }}</a>
+		<li><a href="{% url 'polls:detail' kraj.idKraj %}">{{ kraj.nazwa }}</a>
 		</li>
 </li>
 	{% endfor %}

@@ -1,4 +1,7 @@
 <h1>{{ kraj.nazwa }}</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
 <ul>
 {% for choice in kraj.adres_zamieszkania_set.all %}
 	<li>{{ choice.ulica }}</li>
@@ -10,6 +13,15 @@
 	{% endif %}	
 	<li>{{ choice.kodPocztowy }}</li>
 	<li>{{ choice.miejscowosc }}</li>
-	<br>
+	<br />
 {% endfor %}
 </ul>
+
+<form action="{% url 'polls:vote' kraj.idKraj %}" method="post">
+{% csrf_token %}
+{% for choice in kraj.adres_zamieszkania_set.all %}
+	<input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{choice.idKraj}}" />
+	<label for="choice{{ forloop.counter }}">{{ choice.ulica }}</label><br />
+{% endfor %}
+<input type="submit", value="Vote" />
+</form>
