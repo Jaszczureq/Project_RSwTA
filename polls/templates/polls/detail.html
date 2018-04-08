@@ -1,0 +1,15 @@
+<h1>{{ kraj.nazwa }}</h1>
+<ul>
+{% for choice in kraj.adres_zamieszkania_set.all %}
+	<li>{{ choice.ulica }}</li>
+	<li>{{ choice.numerBudynku }}</li>
+	{% if choice.numerLokalu == NULL %}
+		<li>Blank</li>
+	{% else %}
+		<li>{{ choice.numerLokalu }}</li>
+	{% endif %}	
+	<li>{{ choice.kodPocztowy }}</li>
+	<li>{{ choice.miejscowosc }}</li>
+	<br>
+{% endfor %}
+</ul>
