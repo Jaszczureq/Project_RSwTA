@@ -15,14 +15,14 @@ class Adres_zamieszkania(models.Model):
     numerLokalu = models.CharField(max_length=5, blank=True)
     kodPocztowy = models.CharField(max_length=6)
     miejscowosc = models.CharField(max_length=255)
+    votes = models.IntegerField(default = 0)
     idKraj = models.ForeignKey(Kraj, on_delete=models.CASCADE)
     def __str__(self):
-        str = ""
-        str = self.ulica+' '+self.numerBudynku
+        string = "ID: "+str(self.idAdresZamieszkania)+' '+self.ulica+' '+self.numerBudynku
         if self.numerLokalu:
-            str += '/'+self.numerLokalu
-        str +=' '+self.kodPocztowy+' '+self.miejscowosc
-        return str
+            string += '/'+self.numerLokalu
+        string +=' '+self.kodPocztowy+' '+self.miejscowosc
+        return string
  
  
 class Osoba(models.Model):

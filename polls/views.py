@@ -22,13 +22,19 @@ class ResultsView(generic.DetailView):
 	template_name = 'polls/results.html'
 
 def vote(request, kraj_id):
-	kraj = get_object_or_404(Kraj, pk=kraj_id)
 	try:
-		selected_adres = kraj.adres_zamieszkania_set.get(pk=request.POST.get('adres_zamieszkania', False))
-	except (KeyError, Adres_zamieszkania.DoesNotExist):
-        # Redisplay the question voting form.
-		return render(request, 'polls/detail.html', {'question': kraj,'error_message': "You didn't select a choice.",})
+		kraj = get_object_or_404(Kraj, pk=kraj_id)
+		print(str(kraj.idKraj)+' '+kraj.nazwa)
+		selected_adres = kraj.adres_zamieszkania_set.get(pk=request.POST['adres'])
+		print(selected_adres.ulica+', '+selected_adres.miejscowosc)
+	except (KeyError):
+		return render(request, 'polls/detail.html', 
+		{'kraj': kraj,'error_message': "You didn't select a choice.",})	
+	except (Adres_zamieszkania.DoesNotExist):
+		return render(request, 'polls/detail.html', 
+		{'kraj': kraj,'error_message': "Object does not exist",})
+
 	else:
 		selected_adres.votes += 1
 		selected_adres.save()
-		return HttpResponseRedirect(reverse('polls:results', args=(kraj.id,)))
+		return HttpResponseRedirect(reverse('polls:results', args=(kraj.idKraj,)))

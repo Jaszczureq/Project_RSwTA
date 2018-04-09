@@ -17,10 +17,11 @@
 {% endfor %}
 </ul>
 
-<form action="{% url 'polls:vote' adres_zamieszkania.idAdresZamieszkania %}" method="post">
+<form action="{% url 'polls:vote' kraj.idKraj %}" method="post">
 {% csrf_token %}
 {% for adres in kraj.adres_zamieszkania_set.all %}
-    <input type="radio" name="adres" id="adres{{ forloop.counter }}" value="{{ adres.id }}" />
+    <input type="radio" name="adres" id="adres{{ forloop.counter }}" 
+	value="{{ adres.idAdresZamieszkania }}" />
     <label for="adres{{ forloop.counter }}">{{ adres.ulica }}</label><br />
 {% endfor %}
 <input type="submit" value="Vote" />
