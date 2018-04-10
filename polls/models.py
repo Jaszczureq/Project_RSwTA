@@ -18,11 +18,11 @@ class Adres_zamieszkania(models.Model):
     votes = models.IntegerField(default = 0)
     idKraj = models.ForeignKey(Kraj, on_delete=models.CASCADE)
     def __str__(self):
-        string = "ID: "+str(self.idAdresZamieszkania)+' '+self.ulica+' '+self.numerBudynku
+        var = "ID: "+str(self.idAdresZamieszkania)+' '+self.ulica+' '+self.numerBudynku
         if self.numerLokalu:
-            string += '/'+self.numerLokalu
-        string +=' '+self.kodPocztowy+' '+self.miejscowosc
-        return string
+            var += '/'+self.numerLokalu
+        var +=' '+self.kodPocztowy+' '+self.miejscowosc
+        return var
  
  
 class Osoba(models.Model):
@@ -39,6 +39,8 @@ class Kryterium(models.Model):
     idKryterium = models.AutoField(primary_key=True)
     dlugoscGlosowania = models.IntegerField()
     iloscPoprartychKandydatow = models.IntegerField()
+    def __str__(self):
+        return "Kryterium: "+self.idKryterium
  
  
 class Wybor(models.Model):
@@ -56,6 +58,8 @@ class Kandydat(models.Model):
     idKandydat = models.AutoField(primary_key=True)
     idOsoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
     idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
+    def __str__(self):
+        return "Kandydat: "+self.idKandydat
    
  
  
@@ -63,6 +67,8 @@ class Uprawniony(models.Model):
     idUprawniony = models.AutoField(primary_key=True)
     idOsoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
     idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
+    def __str__(self):
+        return "Uprawniony: "+self.idUprawniony
  
  
 class Oddany_glos(models.Model):
@@ -70,3 +76,5 @@ class Oddany_glos(models.Model):
     dataOddaniaGlosu = models.DateTimeField('data oddania glosu')
     idUprawniony = models.ForeignKey(Uprawniony, on_delete=models.CASCADE)
     idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
+    def __str__(self):
+        return "Oddany głos: "+self.idOddanyGlos
