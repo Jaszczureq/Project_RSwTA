@@ -20,11 +20,11 @@ class Adres_zamieszkania(models.Model):
     votes = models.IntegerField(default = 0)
     idKraj = models.ForeignKey(Kraj, on_delete=models.CASCADE)
     def __str__(self):
-        var = "ID: "+str(self.idAdresZamieszkania)+' '+self.ulica+' '+self.numerBudynku
+        nie_spinaj = "ID: "+str(self.idAdresZamieszkania)+' '+self.ulica+' '+self.numerBudynku
         if self.numerLokalu:
-            var += '/'+self.numerLokalu
-        var +=' '+self.kodPocztowy+' '+self.miejscowosc
-        return var
+            nie_spinaj += '/'+self.numerLokalu
+        nie_spinaj +=' '+self.kodPocztowy+' '+self.miejscowosc
+        return nie_spinaj
     class Meta:
         verbose_name_plural = "Adresy_zamieszkania"
  
