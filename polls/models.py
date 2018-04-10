@@ -6,6 +6,8 @@ class Kraj(models.Model):
     nazwa = models.CharField(max_length=255)
     def __str__(self):
         return self.nazwa
+    class Meta:
+        verbose_name_plural = "Kraje"
  
  
 class Adres_zamieszkania(models.Model):
@@ -23,6 +25,8 @@ class Adres_zamieszkania(models.Model):
             var += '/'+self.numerLokalu
         var +=' '+self.kodPocztowy+' '+self.miejscowosc
         return var
+    class Meta:
+        verbose_name_plural = "Adresy_zamieszkania"
  
  
 class Osoba(models.Model):
@@ -33,6 +37,8 @@ class Osoba(models.Model):
     idAdresZamieszkania = models.ForeignKey(Adres_zamieszkania, on_delete=models.CASCADE)
     def __str__(self):
         return self.imie+' '+self.nazwisko+' '+self.pesel
+    class Meta:
+        verbose_name_plural = "Osoby"
  
  
 class Kryterium(models.Model):
@@ -41,6 +47,8 @@ class Kryterium(models.Model):
     iloscPoprartychKandydatow = models.IntegerField()
     def __str__(self):
         return "Kryterium: "+self.idKryterium
+    class Meta:
+        verbose_name_plural = "Kryteria"
  
  
 class Wybor(models.Model):
@@ -52,6 +60,8 @@ class Wybor(models.Model):
     idKryterium = models.ForeignKey(Kryterium, on_delete=models.CASCADE)
     def __str__(self):
         return self.nazwa
+    class Meta:
+        verbose_name_plural = "Wybory"
  
  
 class Kandydat(models.Model):
@@ -60,6 +70,8 @@ class Kandydat(models.Model):
     idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
         return "Kandydat: "+self.idKandydat
+    class Meta:
+        verbose_name_plural = "Kandydaci"
    
  
  
@@ -69,6 +81,8 @@ class Uprawniony(models.Model):
     idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
         return "Uprawniony: "+self.idUprawniony
+    class Meta:
+        verbose_name_plural = "Uprawnieni"
  
  
 class Oddany_glos(models.Model):
@@ -78,3 +92,6 @@ class Oddany_glos(models.Model):
     idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
         return "Oddany głos: "+self.idOddanyGlos
+    class Meta:
+        verbose_name_plural = "Oddane_głosy"
+		

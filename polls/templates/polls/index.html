@@ -1,3 +1,7 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
+
 {% if latest_kraj_list %}
 	<ul>
 	{% for kraj in latest_kraj_list %}
