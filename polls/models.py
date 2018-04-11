@@ -46,7 +46,7 @@ class Kryterium(models.Model):
     dlugoscGlosowania = models.IntegerField()
     iloscPoprartychKandydatow = models.IntegerField()
     def __str__(self):
-        return "Kryterium: "+self.idKryterium
+        return "Kryterium: "+str(self.idKryterium)
     class Meta:
         verbose_name_plural = "Kryteria"
  
@@ -69,7 +69,7 @@ class Kandydat(models.Model):
     idOsoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
     idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
-        return "Kandydat: "+self.idKandydat
+        return "Kandydat: "+str(self.idKandydat)
     class Meta:
         verbose_name_plural = "Kandydaci"
    
@@ -80,7 +80,7 @@ class Uprawniony(models.Model):
     idOsoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
     idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
-        return "Uprawniony: "+self.idUprawniony
+        return "Uprawniony: "+str(self.idUprawniony)
     class Meta:
         verbose_name_plural = "Uprawnieni"
  
@@ -91,7 +91,7 @@ class Oddany_glos(models.Model):
     idUprawniony = models.ForeignKey(Uprawniony, on_delete=models.CASCADE)
     idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
-        return "Oddany głos: "+self.idOddanyGlos
+        return "Oddany głos: "+str(self.idOddanyGlos)
     class Meta:
         verbose_name_plural = "Oddane_głosy"
 		
