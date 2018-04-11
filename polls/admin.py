@@ -6,7 +6,7 @@ class KrajAdmin(admin.ModelAdmin):
 	fields = ['nazwa']
 	
 class KrajsInLine(admin.ModelAdmin):
-	model = Choice
+	model = Adres_zamieszkania
 	
 class AdresAdmin(admin.ModelAdmin):
 	fieldsets = [
