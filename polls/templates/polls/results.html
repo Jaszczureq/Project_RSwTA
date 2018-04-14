@@ -1,9 +1,9 @@
-<h1>{{ kraj.nazwa }}</h1>
+<h1>{{ wybor.nazwa }}</h1>
 
 <ul>
-{% for adres in kraj.adres_zamieszkania_set.all %}
-    <li>{{ adres.ulica }} -- {{ adres.votes }} vote{{ adres.votes|pluralize }}</li>
+{% for adres in wybor.kandydat_set.all %}
+    <li>{{ adres.wybor.nazwa }} -- {{ adres.votes }} vote{{ adres.votes|pluralize }}</li>
 {% endfor %}
 </ul>
 
-<a href="{% url 'polls:detail' kraj.id %}">Vote again?</a>
+<a href="{% url 'polls:detail' wybor.id %}">Vote again?</a>

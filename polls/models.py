@@ -20,7 +20,7 @@ class Adres_zamieszkania(models.Model):
     votes = models.IntegerField(default = 0)
     kraj = models.ForeignKey(Kraj, on_delete=models.CASCADE)
     def __str__(self):
-        str_to_return = ""+self.ulica+' '+self.numerBudynku
+        str_to_return = str(self.id)+' '+self.ulica+' '+self.numerBudynku
         if self.numerLokalu:
             str_to_return += '/'+self.numerLokalu
         str_to_return +=' '+self.kodPocztowy+' '+self.miejscowosc
@@ -46,7 +46,7 @@ class Kryterium(models.Model):
     dlugoscGlosowania = models.IntegerField()
     iloscPoprartychKandydatow = models.IntegerField()
     def __str__(self):
-        return "Kryterium: "+str(self.idKryterium)
+        return "Kryterium: "+str(self.id)
     class Meta:
         verbose_name_plural = "Kryteria"
  
@@ -69,7 +69,7 @@ class Kandydat(models.Model):
     osoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
     wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
-        return "Kandydat: "+str(self.idKandydat)
+        return "Kandydat: "+str(self.id)
     class Meta:
         verbose_name_plural = "Kandydaci"
    
@@ -80,7 +80,7 @@ class Uprawniony(models.Model):
     osoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
     wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
-        return "Uprawniony: "+str(self.idUprawniony)
+        return "Uprawniony: "+str(self.id)
     class Meta:
         verbose_name_plural = "Uprawnieni"
  
@@ -91,7 +91,7 @@ class Oddany_glos(models.Model):
     uprawniony = models.ForeignKey(Uprawniony, on_delete=models.CASCADE)
     wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
-        return "Oddany głos: "+str(self.idOddanyGlos)
+        return "Oddany głos: "+str(self.id)
     class Meta:
         verbose_name_plural = "Oddane_głosy"
 		
