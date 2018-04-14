@@ -18,7 +18,7 @@ class Adres_zamieszkania(models.Model):
     kodPocztowy = models.CharField(max_length=6)
     miejscowosc = models.CharField(max_length=255)
     votes = models.IntegerField(default = 0)
-    idKraj = models.ForeignKey(Kraj, on_delete=models.CASCADE)
+    kraj = models.ForeignKey(Kraj, on_delete=models.CASCADE)
     def __str__(self):
         str_to_return = "ID: "+str(self.idAdresZamieszkania)+' '+self.ulica+' '+self.numerBudynku
         if self.numerLokalu:
@@ -34,7 +34,7 @@ class Osoba(models.Model):
     imie = models.CharField(max_length=60)
     nazwisko = models.CharField(max_length=60)
     pesel = models.CharField(max_length=11)
-    idAdresZamieszkania = models.ForeignKey(Adres_zamieszkania, on_delete=models.CASCADE)
+    adresZamieszkania = models.ForeignKey(Adres_zamieszkania, on_delete=models.CASCADE)
     def __str__(self):
         return self.imie+' '+self.nazwisko+' '+self.pesel
     class Meta:
@@ -57,7 +57,7 @@ class Wybor(models.Model):
     dataRozpoczecia = models.DateTimeField('data rozpoczecia')
     dataZakonczenia = models.DateTimeField('data zakonczenia')
     opis = models.CharField(max_length=255)
-    idKryterium = models.ForeignKey(Kryterium, on_delete=models.CASCADE)
+    kryterium = models.ForeignKey(Kryterium, on_delete=models.CASCADE)
     def __str__(self):
         return self.nazwa
     class Meta:
@@ -66,8 +66,8 @@ class Wybor(models.Model):
  
 class Kandydat(models.Model):
     idKandydat = models.AutoField(primary_key=True)
-    idOsoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
-    idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
+    osoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
+    wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
         return "Kandydat: "+str(self.idKandydat)
     class Meta:
@@ -77,8 +77,8 @@ class Kandydat(models.Model):
  
 class Uprawniony(models.Model):
     idUprawniony = models.AutoField(primary_key=True)
-    idOsoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
-    idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
+    osoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
+    wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
         return "Uprawniony: "+str(self.idUprawniony)
     class Meta:
@@ -88,8 +88,8 @@ class Uprawniony(models.Model):
 class Oddany_glos(models.Model):
     idOddanyGlos = models.AutoField(primary_key=True)
     dataOddaniaGlosu = models.DateTimeField('data oddania glosu')
-    idUprawniony = models.ForeignKey(Uprawniony, on_delete=models.CASCADE)
-    idWybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
+    uprawniony = models.ForeignKey(Uprawniony, on_delete=models.CASCADE)
+    wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
         return "Oddany głos: "+str(self.idOddanyGlos)
     class Meta:
