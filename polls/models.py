@@ -2,7 +2,7 @@ from django.db import models
  
  
 class Kraj(models.Model):
-    idKraj = models.AutoField(primary_key=True)
+    #idKraj = models.AutoField(primary_key=True)
     nazwa = models.CharField(max_length=255)
     def __str__(self):
         return self.nazwa
@@ -11,7 +11,7 @@ class Kraj(models.Model):
  
  
 class Adres_zamieszkania(models.Model):
-    idAdresZamieszkania = models.AutoField(primary_key=True)
+    #idAdresZamieszkania = models.AutoField(primary_key=True)
     ulica = models.CharField(max_length=255)
     numerBudynku = models.CharField(max_length=5)
     numerLokalu = models.CharField(max_length=5, blank=True)
@@ -20,7 +20,7 @@ class Adres_zamieszkania(models.Model):
     votes = models.IntegerField(default = 0)
     kraj = models.ForeignKey(Kraj, on_delete=models.CASCADE)
     def __str__(self):
-        str_to_return = "ID: "+str(self.idAdresZamieszkania)+' '+self.ulica+' '+self.numerBudynku
+        str_to_return = ""+self.ulica+' '+self.numerBudynku
         if self.numerLokalu:
             str_to_return += '/'+self.numerLokalu
         str_to_return +=' '+self.kodPocztowy+' '+self.miejscowosc
@@ -30,7 +30,7 @@ class Adres_zamieszkania(models.Model):
  
  
 class Osoba(models.Model):
-    idOsoba = models.AutoField(primary_key=True)
+    #idOsoba = models.AutoField(primary_key=True)
     imie = models.CharField(max_length=60)
     nazwisko = models.CharField(max_length=60)
     pesel = models.CharField(max_length=11)
@@ -42,7 +42,7 @@ class Osoba(models.Model):
  
  
 class Kryterium(models.Model):
-    idKryterium = models.AutoField(primary_key=True)
+    #idKryterium = models.AutoField(primary_key=True)
     dlugoscGlosowania = models.IntegerField()
     iloscPoprartychKandydatow = models.IntegerField()
     def __str__(self):
@@ -52,7 +52,7 @@ class Kryterium(models.Model):
  
  
 class Wybor(models.Model):
-    idWybor = models.AutoField(primary_key=True)
+    #idWybor = models.AutoField(primary_key=True)
     nazwa = models.CharField(max_length=255)
     dataRozpoczecia = models.DateTimeField('data rozpoczecia')
     dataZakonczenia = models.DateTimeField('data zakonczenia')
@@ -65,7 +65,7 @@ class Wybor(models.Model):
  
  
 class Kandydat(models.Model):
-    idKandydat = models.AutoField(primary_key=True)
+    #idKandydat = models.AutoField(primary_key=True)
     osoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
     wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
@@ -76,7 +76,7 @@ class Kandydat(models.Model):
  
  
 class Uprawniony(models.Model):
-    idUprawniony = models.AutoField(primary_key=True)
+    #idUprawniony = models.AutoField(primary_key=True)
     osoba = models.ForeignKey(Osoba, on_delete=models.CASCADE)
     wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
     def __str__(self):
@@ -86,7 +86,7 @@ class Uprawniony(models.Model):
  
  
 class Oddany_glos(models.Model):
-    idOddanyGlos = models.AutoField(primary_key=True)
+    #idOddanyGlos = models.AutoField(primary_key=True)
     dataOddaniaGlosu = models.DateTimeField('data oddania glosu')
     uprawniony = models.ForeignKey(Uprawniony, on_delete=models.CASCADE)
     wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)

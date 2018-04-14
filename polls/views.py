@@ -11,7 +11,7 @@ class IndexView(generic.ListView):
 	
 	def get_queryset(self):
 		"""Return the last five published questions"""
-		return Kraj.objects.order_by('-idKraj')[:5]
+		return Kraj.objects.order_by('-id')[:5]
 	
 class DetailView(generic.DetailView):
 	model = Kraj
@@ -24,7 +24,7 @@ class ResultsView(generic.DetailView):
 def vote(request, kraj_id):
 	try:
 		kraj = get_object_or_404(Kraj, pk=kraj_id)
-		print(str(kraj.idKraj)+' '+kraj.nazwa)
+		print(str(kraj.id)+' '+kraj.nazwa)
 		selected_adres = kraj.adres_zamieszkania_set.get(pk=request.POST['adres'])
 		print(selected_adres.ulica+', '+selected_adres.miejscowosc)
 	except (KeyError):
@@ -37,4 +37,4 @@ def vote(request, kraj_id):
 	else:
 		selected_adres.votes += 1
 		selected_adres.save()
-		return HttpResponseRedirect(reverse('polls:results', args=(kraj.idKraj,)))
+		return HttpResponseRedirect(reverse('polls:results', args=(kraj.id,)))
