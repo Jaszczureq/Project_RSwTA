@@ -1,28 +1,23 @@
-<h1>{{ kraj.nazwa }}</h1>
+<h1>{{ wybor.nazwa }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <ul>
-{% for choice in kraj.adres_zamieszkania_set.all %}
-	<li>{{ choice.ulica }}</li>
-	<li>{{ choice.numerBudynku }}</li>
-	{% if choice.numerLokalu == NULL %}
-		<li>Blank</li>
-	{% else %}
-		<li>{{ choice.numerLokalu }}</li>
-	{% endif %}	
-	<li>{{ choice.kodPocztowy }}</li>
-	<li>{{ choice.miejscowosc }}</li>
+{% for choice in wybor.kandydat_set.all %}
+	<li>{{ choice.wybor.nazwa }}</li>
+	<li>{{ choice.osoba.imie }}</li>
+	<li>{{ choice.osoba.nazwisko }}</li>
+	<li>{{ choice.osoba.pesel }}</li>
 	<br />
 {% endfor %}
 </ul>
 
-<form action="{% url 'polls:vote' kraj.idKraj %}" method="post">
+<form action="{% url 'polls:vote' wybor.id %}" method="post">
 {% csrf_token %}
-{% for adres in kraj.adres_zamieszkania_set.all %}
+{% for adres in wybor.kandydat_set.all %}
     <input type="radio" name="adres" id="adres{{ forloop.counter }}" 
-	value="{{ adres.idAdresZamieszkania }}" />
-    <label for="adres{{ forloop.counter }}">{{ adres.ulica }}</label><br />
+	value="{{ adres.id }}" />
+    <label for="adres{{ forloop.counter }}">{{ adres.wybor.nazwa }}</label><br />
 {% endfor %}
 <input type="submit" value="Vote" />
 </form>

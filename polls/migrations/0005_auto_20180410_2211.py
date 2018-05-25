@@ -4,6 +4,7 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
+    atomic = False
 
     dependencies = [
         ('polls', '0004_adres_zamieszkania_votes'),

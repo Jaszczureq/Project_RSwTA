@@ -2,10 +2,10 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
 
-{% if latest_kraj_list %}
+{% if latest_wybor_list %}
 	<ul>
-	{% for kraj in latest_kraj_list %}
-		<li><a href="{% url 'polls:detail' kraj.idKraj %}">{{ kraj.nazwa }}</a>
+	{% for wybor in latest_wybor_list %}
+		<li><a href="{% url 'polls:detail' wybor.id %}">{{ wybor.nazwa }}</a>
 		</li>
 </li>
 	{% endfor %}

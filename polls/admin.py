@@ -12,7 +12,7 @@ class AdresAdmin(admin.ModelAdmin):
 	fieldsets = [
 		(None, {'fields': ['ulica', 'miejscowosc',]}),
 		('Szczegóły', {'fields': ['numerBudynku', 'numerLokalu']}),
-		(None, {'fields': ['kodPocztowy', 'votes', 'idKraj']}),
+		(None, {'fields': ['kodPocztowy', 'kraj']}),
 	]
 
 admin.site.register(Kraj, KrajAdmin)
