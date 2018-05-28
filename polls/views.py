@@ -1,9 +1,25 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import UserCreationForm
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 
 from .models import *
+
+def signup(request):
+	if request.method == 'POST':
+		form=UserCreationForm(request.POST)
+		if form.is_valid():
+			user=form.save()
+			username = form.cleaned_data.get('username')
+			raw_password = form.cleaned_data.get('password')
+			#user = authenticate(username=username, password=raw_password)
+			login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+			return HttpResponseRedirect(reverse('polls:index'))
+	else:
+		form=UserCreationForm()
+	return render(request, 'polls/signup.html', {'form':form})
 
 class IndexView(generic.ListView):
 	template_name = 'polls/index.html'
