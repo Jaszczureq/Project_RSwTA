@@ -1,5 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -21,6 +22,7 @@ def signup(request):
 		form=UserCreationForm()
 	return render(request, 'polls/signup.html', {'form':form})
 
+
 class IndexView(generic.ListView):
 	template_name = 'polls/index.html'
 	context_object_name = 'latest_wybor_list'
@@ -28,15 +30,18 @@ class IndexView(generic.ListView):
 	def get_queryset(self):
 		"""Return the last five published questions"""
 		return Wybor.objects.order_by('-id')[:5]
-	
+
+
 class DetailView(generic.DetailView):
 	model = Wybor
 	template_name = 'polls/detail.html'
 	
+
 class ResultsView(generic.DetailView):
 	model = Wybor
 	template_name = 'polls/results.html'
 
+@login_required
 def vote(request, wybor_id):
 	try:
 		wybor = get_object_or_404(Wybor, pk=wybor_id)

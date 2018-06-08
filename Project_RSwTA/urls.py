@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin, auth
 from django.urls import include
+from polls import views
 
 urlpatterns = [
     url('polls/', include('polls.urls')),
     url('admin/', admin.site.urls),
     url('accounts/', include('django.contrib.auth.urls')),
+	url('accounts/signup', views.signup, name='signup'),
 	
 ]
