@@ -18,7 +18,7 @@
 <form action="{% url 'polls:vote' wybor.id %}" method="post">
 {% csrf_token %}
 {% for adres in wybor.kandydat_set.all %}
-    <input type="radio" name="adres" id="adres{{ forloop.counter }}" 
+    <input type="radio" name="id" id="adres{{ forloop.counter }}" 
 	value="{{ adres.id }}" />
     <label for="adres{{ forloop.counter }}">{{ adres.wybor.nazwa }}</label><br />
 {% endfor %}

@@ -17,14 +17,14 @@ def signup(request):
 			raw_password = form.cleaned_data.get('password')
 			#user = authenticate(username=username, password=raw_password)
 			login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-			return HttpResponseRedirect(reverse('polls:index'))
+			return HttpResponseRedirect(reverse('polls:detail'))
 	else:
 		form=UserCreationForm()
 	return render(request, 'polls/signup.html', {'form':form})
 
 
-class IndexView(generic.ListView):
-	template_name = 'polls/index.html'
+class VoteListView(generic.ListView):
+	template_name = 'polls/votelist.html'
 	context_object_name = 'latest_wybor_list'
 	
 	def get_queryset(self):
@@ -46,7 +46,7 @@ def vote(request, wybor_id):
 	try:
 		wybor = get_object_or_404(Wybor, pk=wybor_id)
 		print(str(wybor.id)+' '+wybor.nazwa)
-		selected_candidate = wybor.kandydat_set.get(pk=request.POST['adres'])
+		selected_candidate = wybor.kandydat_set.get(pk=request.POST['id'])
 	except (KeyError):
 		return render(request, 'polls/detail.html', 
 		{'wybor': wybor,'error_message': "You didn't select a choice.",})	
