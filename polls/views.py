@@ -17,11 +17,17 @@ def signup(request):
 			raw_password = form.cleaned_data.get('password')
 			#user = authenticate(username=username, password=raw_password)
 			login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-			return HttpResponseRedirect(reverse('polls:detail'))
+			return HttpResponseRedirect(reverse('polls:list'))
 	else:
 		form=UserCreationForm()
 	return render(request, 'polls/signup.html', {'form':form})
 
+	
+class IndexView(generic.TemplateView):
+	model=Kraj
+	template_name='index.html'
+
+	
 
 class VoteListView(generic.ListView):
 	template_name = 'polls/votelist.html'
@@ -29,12 +35,13 @@ class VoteListView(generic.ListView):
 	
 	def get_queryset(self):
 		"""Return the last five published questions"""
-		return Wybor.objects.order_by('-id')[:5]
+		return Wybor.objects.order_by('-id')[:10]
 
 
 class DetailView(generic.DetailView):
 	model = Wybor
 	template_name = 'polls/detail.html'
+	
 	
 
 class ResultsView(generic.DetailView):

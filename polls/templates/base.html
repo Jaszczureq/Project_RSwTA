@@ -5,6 +5,26 @@
 		<title>{% block title %}Place holder text{% endblock %}</title>
 	</head>
 	<body>
+		<table>
+		{% if user.is_authenticated %}
+			
+			<tr>
+				<td><a href="{% url 'index' %}">Go back to index page</a></td>
+			</tr>
+			<tr>
+				<td>Moar text, Logout here</td>
+			</tr>
+		{% else %}
+			<tr>
+				<td><a href="{% url 'index' %}">Go back to index page</a></td>
+			</tr>
+			<tr>
+				<td><a href="{% url 'signup' %}">You can register here</a></td>
+			</tr>
+		{% endif %}
+		</table>
+		<hr>
+		</table>
 		{% block content %}
 		{% endblock %}
 	</body>
