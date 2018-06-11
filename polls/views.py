@@ -1,5 +1,5 @@
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login, authenticate, forms
+#from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404, HttpResponse, HttpResponseRedirect
@@ -10,7 +10,7 @@ from .models import *
 
 def signup(request):
 	if request.method == 'POST':
-		form=UserCreationForm(request.POST)
+		form=forms.UserCreationForm(request.POST)
 		if form.is_valid():
 			user=form.save()
 			username = form.cleaned_data.get('username')
@@ -19,7 +19,7 @@ def signup(request):
 			login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 			return HttpResponseRedirect(reverse('polls:list'))
 	else:
-		form=UserCreationForm()
+		form=forms.UserCreationForm()
 	return render(request, 'polls/signup.html', {'form':form})
 
 	
@@ -36,7 +36,7 @@ class VoteListView(generic.ListView):
 	def get_queryset(self):
 		"""Return the last five published questions"""
 		return Wybor.objects.order_by('-id')[:10]
-
+		
 
 class DetailView(generic.DetailView):
 	model = Wybor
