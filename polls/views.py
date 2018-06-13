@@ -17,7 +17,7 @@ def signup(request):
             user = form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=raw_password)
+            #user = authenticate(username=username, password=raw_password)
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return HttpResponseRedirect(reverse('polls:list'))
     else:
