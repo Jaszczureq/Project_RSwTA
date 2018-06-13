@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
-import datetime
+from django.utils.decorators import method_decorator
 
 from Project_RSwTA.forms import SignUpForm
 from .models import *
@@ -29,7 +29,7 @@ class IndexView(generic.TemplateView):
     model = Kraj
     template_name = 'index.html'
 
-
+@method_decorator(login_required, name='dispatch')
 class VoteListView(generic.ListView):
     template_name = 'polls/votelist.html'
     context_object_name = 'latest_wybor_list'
@@ -55,7 +55,7 @@ class VoteListView(generic.ListView):
         """Return the last five published questions"""
         return Wybor.objects.filter(active='True')
 
-
+@method_decorator(login_required, name='dispatch')
 class DetailView(generic.DetailView):
     model = Wybor
     template_name = 'polls/detail.html'
