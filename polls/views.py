@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
+import datetime
 
 from Project_RSwTA.forms import SignUpForm
 from .models import *
@@ -33,9 +34,26 @@ class VoteListView(generic.ListView):
     template_name = 'polls/votelist.html'
     context_object_name = 'latest_wybor_list'
 
+    wybor_set = Wybor.objects.all().order_by('-id')
+    wybors = list(wybor_set)
+    cur = timezone.now()
+
+    for i in wybors:
+
+        if cur > i.dataRozpoczecia and cur < i.dataZakonczenia:
+            i.active = True
+            i.save()
+        else:
+            i.active = False
+            i.save()
+
+        print(i.nazwa + " " + str(i.active))
+        print(i.dataRozpoczecia)
+        print(i.dataZakonczenia)
+
     def get_queryset(self):
         """Return the last five published questions"""
-        return Wybor.objects.order_by('-id')[:10]
+        return Wybor.objects.filter(active='True')
 
 
 class DetailView(generic.DetailView):

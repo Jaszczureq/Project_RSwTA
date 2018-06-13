@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 class Kraj(models.Model):
@@ -56,10 +57,11 @@ class Kryterium(models.Model):
 
 class Wybor(models.Model):
     nazwa = models.CharField(max_length=255)
-    dataRozpoczecia = models.DateTimeField('data rozpoczecia')
-    dataZakonczenia = models.DateTimeField('data zakonczenia')
+    dataRozpoczecia = models.DateTimeField(default=timezone.now)
+    dataZakonczenia = models.DateTimeField(default=timezone.now)
     opis = models.CharField(max_length=255)
     kryterium = models.ManyToManyField(Kryterium)
+    active = models.BooleanField(default=False)
 
     def __str__(self):
         return self.nazwa
