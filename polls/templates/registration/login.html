@@ -1,11 +1,23 @@
-{% extends 'base.html' %} {% block title %}Login{% endblock %} {% block content %}
-<h2>Login</h2>
-<form method="post">
-  <div class="form-group">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Login</button>
+{% extends 'base.html' %} {% load bootstrap3 %} {% block title %}Login{% endblock %} {% block content %}
+<div class="row">
+  <div class="col-lg-4"></div>
+  <div class="col-lg-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Log in
+      </div>
+      <div class="panel-body">
+        <form method="post">
+          <div class="form-group">
+            {% csrf_token %} {% bootstrap_form form %}
+            <button type="submit" class="btn btn-default">Login</button>
+          </div>
+          <a href="{% url 'signup' %}">You can register here</a>
+        </form>
+      </div>
+    </div>
   </div>
-</form>
-<a href="{% url 'signup' %}">You can register here</a>
+  <!-- /.col-lg-6 -->
+  <div class="col-lg-4"></div>
+</div>
 {% endblock %}
-
