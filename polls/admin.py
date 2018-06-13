@@ -2,21 +2,25 @@ from django.contrib import admin
 
 from .models import *
 
+
 class KrajAdmin(admin.ModelAdmin):
-	fields = ['nazwa']
-	
+    fields = ['nazwa']
+
+
 class KrajsInLine(admin.ModelAdmin):
-	model = Adres_zamieszkania
-	
+    model = Adres_zamieszkania
+
+
 class AdresAdmin(admin.ModelAdmin):
-	fieldsets = [
-		(None, {'fields': ['ulica', 'miejscowosc',]}),
-		('Szczegóły', {'fields': ['numerBudynku', 'numerLokalu']}),
-		(None, {'fields': ['kodPocztowy', 'kraj']}),
-	]
+    fieldsets = [
+        (None, {'fields': ['ulica', 'miejscowosc', ]}),
+        ('Szczegóły', {'fields': ['numerBudynku', 'numerLokalu']}),
+        (None, {'fields': ['kodPocztowy', 'kraj']}),
+    ]
+
 
 admin.site.register(Kraj, KrajAdmin)
-admin.site.register(Adres_zamieszkania,AdresAdmin)
+admin.site.register(Adres_zamieszkania, AdresAdmin)
 admin.site.register(Osoba)
 admin.site.register(Kryterium)
 admin.site.register(Wybor)
