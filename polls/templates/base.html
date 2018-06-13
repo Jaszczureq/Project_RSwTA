@@ -5,6 +5,33 @@
 		<title>{% block title %}Place holder text{% endblock %}</title>
 	</head>
 	<body>
+		<table>
+		{% if user.is_authenticated %}
+			<!--User ir logged in-->
+			<tr>
+				<td>You are logged in as <b>{{ request.user.username }}</b></td>
+			</tr>
+			<tr>
+				<td><a href="{% url 'index' %}">Go to index page</a></td>
+			</tr>
+			<tr>
+				<td><a href="{% url 'logout' %}">You can log out here</a></td>
+			</tr>
+		{% else %}
+			<!--User is not logged in-->
+			<tr>
+				<td>You are not logged in</td>
+			</tr>
+			<tr>
+				<td><a href="{% url 'login' %}">You can log in here</a></td>
+			</tr>
+			<tr>
+				<td><a href="{% url 'signup' %}">You can register here</a></td>
+			</tr>
+		{% endif %}
+		</table>
+		<hr>
+		</table>
 		{% block content %}
 		{% endblock %}
 	</body>
