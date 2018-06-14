@@ -20,7 +20,7 @@
 {% for adres in wybor.kandydat_set.all %}
     <input type="radio" name="id" id="adres{{ forloop.counter }}" 
 	value="{{ adres.id }}" />
-    <label for="adres{{ forloop.counter }}">{{ adres.wybor.nazwa }}</label><br />
+    <label for="adres{{ forloop.counter }}">{{ adres.osoba.nazwisko }}</label><br />
 {% endfor %}
 <input type="submit" value="Vote" />
 </form>

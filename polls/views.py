@@ -17,7 +17,7 @@ def signup(request):
             user = form.save()
             username = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password')
-            #user = authenticate(username=username, password=raw_password)
+            # user = authenticate(username=username, password=raw_password)
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return HttpResponseRedirect(reverse('polls:list'))
     else:
@@ -28,6 +28,7 @@ def signup(request):
 class IndexView(generic.TemplateView):
     model = Kraj
     template_name = 'index.html'
+
 
 @method_decorator(login_required, name='dispatch')
 class VoteListView(generic.ListView):
@@ -49,11 +50,12 @@ class VoteListView(generic.ListView):
 
         print(i.nazwa + " " + str(i.active))
         print(i.dataRozpoczecia)
+        print(timezone.now())
         print(i.dataZakonczenia)
 
     def get_queryset(self):
-        """Return the last five published questions"""
         return Wybor.objects.filter(active='True')
+
 
 @method_decorator(login_required, name='dispatch')
 class DetailView(generic.DetailView):
