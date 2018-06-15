@@ -5,7 +5,7 @@
 
 <ul>
 {% for adres in wybor.kandydat_set.all %}
-    <li>{{ adres.wybor.nazwa }} -- {{ adres.votes }} vote{{ adres.votes|pluralize }}</li>
+    <li>{{ adres.wybor.nazwisko }} -- {{ adres.votes }} vote{{ adres.votes|pluralize }}</li>
 {% endfor %}
 </ul>
 

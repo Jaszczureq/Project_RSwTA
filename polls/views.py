@@ -19,10 +19,18 @@ def signup(request):
             raw_password = form.cleaned_data.get('password')
             # user = authenticate(username=username, password=raw_password)
             login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-            return HttpResponseRedirect(reverse('polls:list'))
+            return HttpResponseRedirect(reverse('index'))
     else:
         form = SignUpForm()
     return render(request, 'polls/signup.html', {'form': form})
+
+
+def hola(request):
+    if request.user.is_superuser:
+        return HttpResponseRedirect('/admin/')
+    else:
+        return HttpResponseRedirect('/')
+    # return HttpResponseRedirect(reverse('admin:index'))
 
 
 class IndexView(generic.TemplateView):
