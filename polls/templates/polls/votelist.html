@@ -10,7 +10,6 @@
 	{% for wybor in latest_wybor_list %}
 		<li><a href="{% url 'polls:detail' wybor.id %}">{{ wybor.nazwa }}</a>
 		</li>
-</li>
 	{% endfor %}
 	</ul>
 {% else %}

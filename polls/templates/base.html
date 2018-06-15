@@ -14,7 +14,7 @@
 	<!-- Bootstrap core CSS -->
 	<link rel="stylesheet" type="text/css" href="{% static 'polls/bootstrap.min.css' %}" />
 
-	{% load bootstrap3 %} {# Load CSS and JavaScript #} 
+	{% load bootstrap3 %} {# Load CSS and JavaScript #}
 	{% bootstrap_css %}
 	{% bootstrap_javascript %} {# Display django.contrib.messages as Bootstrap alerts #} 
 	{% bootstrap_messages %}
@@ -64,9 +64,16 @@
 			<div class="collapse navbar-collapse" id="navbarResponsive2">
 					<ul class="navbar-nav navbar-right ">
 						{% if user.is_authenticated %}
+						{% if user.is_superuser %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'admin:index' %}">Hello, {{ request.user.username }}</a>
+						</li>
+						{% else %}
 						<li class="nav-item">
 							<a class="nav-link" href="#">Hello, {{ request.user.username }}</a>
 						</li>
+
+						{% endif %}
 						<li class="nav-item">
 								<a class="nav-link" href="{% url 'logout' %}">Logout</a>
 						</li>

@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from django.utils.decorators import method_decorator
+from django.db.models import Q
 
 from Project_RSwTA.forms import SignUpForm
 from .models import *
@@ -30,7 +31,6 @@ def hola(request):
         return HttpResponseRedirect('/admin/')
     else:
         return HttpResponseRedirect('/')
-    # return HttpResponseRedirect(reverse('admin:index'))
 
 
 class IndexView(generic.TemplateView):
@@ -49,20 +49,26 @@ class VoteListView(generic.ListView):
 
     for i in wybors:
 
-        if cur > i.dataRozpoczecia and cur < i.dataZakonczenia:
-            i.active = True
-            i.save()
+        if cur > i.dataRozpoczecia:
+            if cur < i.dataZakonczenia:
+                i.status = 0
+                i.save()
+            else:
+                i.status = 1
+                i.save()
         else:
-            i.active = False
+            i.status = -1
             i.save()
 
-        print(i.nazwa + " " + str(i.active))
+        print(i.nazwa + " " + str(i.status))
         print(i.dataRozpoczecia)
         print(timezone.now())
         print(i.dataZakonczenia)
 
     def get_queryset(self):
-        return Wybor.objects.filter(active='True')
+        crit1 = Q(status="0")
+        crit2 = Q(status="1")
+        return Wybor.objects.filter(crit1 | crit2)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -70,11 +76,9 @@ class DetailView(generic.DetailView):
     model = Wybor
     template_name = 'polls/detail.html'
 
-
 class ResultsView(generic.DetailView):
     model = Wybor
     template_name = 'polls/results.html'
-
 
 @login_required
 def vote(request, wybor_id):

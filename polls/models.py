@@ -47,6 +47,7 @@ class Osoba(models.Model):
 class Kryterium(models.Model):
     dlugoscGlosowania = models.IntegerField()
     iloscPoprartychKandydatow = models.IntegerField()
+    votes = models.IntegerField(default=-1)
 
     def __str__(self):
         return "Kryterium: " + str(self.id)
@@ -56,12 +57,12 @@ class Kryterium(models.Model):
 
 
 class Wybor(models.Model):
-    nazwa = models.CharField(max_length=255)
+    nazwa = models.CharField(default='', max_length=255)
     dataRozpoczecia = models.DateTimeField(default=timezone.now)
     dataZakonczenia = models.DateTimeField(default=timezone.now)
-    opis = models.CharField(max_length=255)
+    opis = models.CharField(max_length=255, default='')
     kryterium = models.ManyToManyField(Kryterium)
-    active = models.BooleanField(default=False)
+    status = models.IntegerField(default=0)
 
     def __str__(self):
         return self.nazwa
@@ -94,6 +95,7 @@ class Uprawniony(models.Model):
 
 
 class Oddany_glos(models.Model):
+    user=models.OneToOneField
     dataOddaniaGlosu = models.DateTimeField('data oddania glosu')
     uprawniony = models.OneToOneField(Uprawniony, on_delete=models.CASCADE)
     wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
