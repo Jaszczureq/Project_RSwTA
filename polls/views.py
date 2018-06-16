@@ -88,11 +88,11 @@ class ResultsView(generic.DetailView):
 
 class ResultsViewPdf(generic.DetailView):
     model = Wybor
-    template_name = 'polls/results.html'
+    template_name = 'polls/results_pdf.html'
 
     def get(self, request, pk, *args, **kwargs):
         model = Wybor.objects.get(pk=pk)
-        pdf = render_to_pdf('polls/results.html', {'wybor': model})
+        pdf = render_to_pdf('polls/results_pdf.html', {'wybor': model})
         return HttpResponse(pdf, content_type='application/pdf')
 
 
