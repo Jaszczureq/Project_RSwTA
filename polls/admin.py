@@ -20,12 +20,8 @@ class AdresAdmin(admin.ModelAdmin):
 
 
 class KandydatAdmin(admin.ModelAdmin):
-<<<<<<< HEAD
     fields = ['osoba', 'wybor']
     # fields = ['osoba', 'wybor', 'votes']
-=======
-    fields = ['osoba', 'wybor', 'votes']
->>>>>>> 1ec22281e90e778e47a77d517b63d751a9262b46
 
 
 admin.site.register(Kraj, KrajAdmin)
