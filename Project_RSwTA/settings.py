@@ -116,6 +116,12 @@ USE_TZ = True
 LOGIN_REDIRECT_URL = 'hola'
 LOGOUT_REDIRECT_URL = 'index'
 
+EMAIL_USE_TLS = True
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='ewyborytestemail@gmail.com'
+EMAIL_HOST_PASSWORD='emailTest1'
+EMAIL_PORT = 587
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 

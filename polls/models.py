@@ -67,7 +67,7 @@ class Wybor(models.Model):
     status = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.nazwa
+        return self.nazwa + ", ID: " + str(self.id)
 
     class Meta:
         verbose_name_plural = "Wybory"
