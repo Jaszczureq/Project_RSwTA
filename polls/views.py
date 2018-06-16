@@ -89,6 +89,7 @@ class ResultsView(generic.DetailView):
 class ResultsViewPdf(generic.DetailView):
     model = Wybor
     template_name = 'polls/results.html'
+
     def get(self, request, *args, **kwargs):
         model = Wybor
         pdf = render_to_pdf('polls/results.html', {'wybor': Wybor})
@@ -109,55 +110,40 @@ def vote(request, wybor_id):
                       {'wybor': wybor, 'error_message': "Object does not exist", })
 
     else:
-        # myuser = request.user
-        # voters = list(Oddany_glos.objects.all())
-        # cur = timezone.now()
-        # if not voters:
-        #     myosoba = Osoba.objects.get(imie='Jan')
-        #     upraw = Uprawniony(osoba=myosoba, wybor=wybor)
-        #     upraw.save()
-        #     glos = Oddany_glos(user=myuser, dataOddaniaGlosu=cur, wybor=wybor)
-        #     glos.save()
-        #     print("Dodano oddany glos")
-        # else:
-        #     print("Lista voters nie pusta")
-        #     for voter in voters:
-        #         user=voter.get_username
-        #         if user.username == myuser.username and wybor.nazwa == voter.wybor.nazwa:
-        #             print("Istnieje glosujacy")
-        #             return HttpResponseRedirect(reverse('polls:results', args=(wybor.id,)))
-        #         else:
-        #             print("Nie istenieje glosujacy")
-        #             print("Username:" + myuser.username)
-        #             print("Data oddania" + cur)
-        #             print("Nazwa wyborow" + wybor.nazwa)
-        #             time.sleep(1)
-        #             glos = Oddany_glos(user=myuser, dataOddaniaGlosu=cur, wybor=wybor)
-        #             glos.save()
 
         current_user = request.user
         votes = list(Oddany_glos.objects.all())
         current_time = timezone.now()
-        exists = 0
 
         for i in votes:
             print("Username: " + i.author.username + ", Wybór: " + i.wybor.nazwa)
 
-        if not votes:
-            print("Lista jest pusta")
-            glos = Oddany_glos(author=current_user, dataOddaniaGlosu=current_time, wybor=wybor)
-            glos.save()
-        else:
-            print("Lista nie jest pusta")
-            for vote in votes:
-                if vote.author.username == current_user.username and vote.wybor.nazwa == wybor.nazwa:
-                    print("Istnieje taki glos")
-                    return HttpResponseRedirect(reverse('polls:results', args=(wybor.id,)))
+        authorized = list(Uprawniony.objects.all())
 
-        print("Nie istnieje taki glos")
-        glos = Oddany_glos(author=current_user, dataOddaniaGlosu=current_time, wybor=wybor)
-        glos.save()
+        for i in authorized:
+            if i.osoba.username == current_user.username and i.wybor.nazwa == wybor.nazwa:
+                print("Uzytkownik jest uprawniony")
 
-        selected_candidate.votes += 1
-        selected_candidate.save()
+                if not votes:
+                    print("Lista jest pusta")
+                    glos = Oddany_glos(author=current_user, dataOddaniaGlosu=current_time, wybor=wybor)
+                    glos.save()
+                else:
+                    print("Lista nie jest pusta")
+
+                    for vote in votes:
+                        if vote.author.username == current_user.username and vote.wybor.nazwa == wybor.nazwa:
+                            print("Istnieje taki glos")
+                            return HttpResponseRedirect(reverse('polls:results', args=(wybor.id,)))
+
+                print("Nie istnieje taki glos")
+                glos = Oddany_glos(author=current_user, dataOddaniaGlosu=current_time, wybor=wybor)
+                glos.save()
+
+                selected_candidate.votes += 1
+                selected_candidate.save()
+                return HttpResponseRedirect(reverse('polls:results', args=(wybor.id,)))
+            else:
+                print("Uzytkownik nie jest uprawniony")
+
         return HttpResponseRedirect(reverse('polls:results', args=(wybor.id,)))

@@ -88,7 +88,7 @@ class Kandydat(models.Model):
 
 
 class Uprawniony(models.Model):
-    osoba = models.OneToOneField(Osoba, on_delete=models.CASCADE)
+    osoba = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, null=True)
     wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE, unique=False)
 
     def __str__(self):
