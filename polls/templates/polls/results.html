@@ -27,27 +27,18 @@
 <div class="row">
     <div class="col-lg-12 text-center">
         <h2>Results</h2>
-    </div>    
+    </div>
 </div>
 
-
-<<<<<<< HEAD
 {% for x in wybor.kandydat_set.all %}
 <div class="row">
     <div class="col-lg-6">
         <h2>{{ x.osoba.imie }} {{ x.osoba.nazwisko }}</h2>
-    </div>    
+    </div>
     <div class="col-lg-6">
         <h2> {{ x.votes }} vote{{ x.votes|pluralize }}</h2>
     </div>
 </div>
 {% endfor %}
-=======
-<ul>
-    {% for x in wybor.kandydat_set.all %}
-    <li>{{ x.osoba.nazwisko }} -- {{ x.votes }} vote{{ x.votes|pluralize }}</li>
-    {% endfor %}
-</ul>
-<!--<a href="{% url 'polls:detail' wybor.id %}">Vote again?</a>-->
->>>>>>> 1ec22281e90e778e47a77d517b63d751a9262b46
+
 {% endblock %}

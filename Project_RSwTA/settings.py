@@ -29,8 +29,6 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'annoying',
-    'xhtml2pdf',
     'django_extensions',
     'polls.apps.PollsConfig',
     'django.contrib.admin',

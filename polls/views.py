@@ -85,22 +85,14 @@ class ResultsView(generic.DetailView):
     model = Wybor
     template_name = 'polls/results.html'
 
-    # def get(self, request, *args, **kwargs):
-    #     model = Wybor
-    #     pdf = render_to_pdf('polls/results.html', {'wybor': Wybor})
-    #     return HttpResponse(pdf, content_type='application/pdf')
-
 
 class ResultsViewPdf(generic.DetailView):
-    # model = Wybor
-    # template_name = 'polls/results.html'
-    
+    model = Wybor
+    template_name = 'polls/results.html'
     def get(self, request, *args, **kwargs):
         model = Wybor
         pdf = render_to_pdf('polls/results.html', {'wybor': Wybor})
         return HttpResponse(pdf, content_type='application/pdf')
-        # model = Wybor
-        # template_name = 'polls/results.html'
 
 
 @login_required
