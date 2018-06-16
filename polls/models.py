@@ -1,5 +1,8 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Kraj(models.Model):
@@ -85,7 +88,7 @@ class Kandydat(models.Model):
 
 class Uprawniony(models.Model):
     osoba = models.OneToOneField(Osoba, on_delete=models.CASCADE)
-    wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
+    wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE, unique=False)
 
     def __str__(self):
         return "Uprawniony: " + str(self.id)
@@ -95,13 +98,20 @@ class Uprawniony(models.Model):
 
 
 class Oddany_glos(models.Model):
-    user=models.OneToOneField
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     dataOddaniaGlosu = models.DateTimeField('data oddania glosu')
-    uprawniony = models.OneToOneField(Uprawniony, on_delete=models.CASCADE)
+    uprawniony = models.OneToOneField(Uprawniony, on_delete=models.CASCADE, null=True, unique=False)
     wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
+
+    @classmethod
+    def create(cls, user, data, wybor):
+        glos=cls(user=user, dataOddaniaGlosu=data, wybor=wybor)
+        return glos
 
     def __str__(self):
         return "Oddany głos: " + str(self.id)
 
     class Meta:
         verbose_name_plural = "Oddane_głosy"
+
+

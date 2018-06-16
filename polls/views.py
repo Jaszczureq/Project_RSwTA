@@ -58,12 +58,7 @@ class VoteListView(generic.ListView):
                 i.save()
         else:
             i.status = -1
-            i.save()
-
-        print(i.nazwa + " " + str(i.status))
-        print(i.dataRozpoczecia)
-        print(timezone.now())
-        print(i.dataZakonczenia)
+            # i.save()
 
     def get_queryset(self):
         crit1 = Q(status="0")
@@ -76,9 +71,11 @@ class DetailView(generic.DetailView):
     model = Wybor
     template_name = 'polls/detail.html'
 
+
 class ResultsView(generic.DetailView):
     model = Wybor
     template_name = 'polls/results.html'
+
 
 @login_required
 def vote(request, wybor_id):
@@ -94,6 +91,29 @@ def vote(request, wybor_id):
                       {'wybor': wybor, 'error_message': "Object does not exist", })
 
     else:
+        myuser = request.user
+        voters = list(Oddany_glos.objects.all())
+        cur = timezone.now()
+        if not voters:
+            myosoba = Osoba.objects.get(imie='Jan')
+            upraw = Uprawniony(osoba=myosoba, wybor=wybor)
+            upraw.save()
+            glos = Oddany_glos(user=myuser, dataOddaniaGlosu=cur, uprawniony=upraw, wybor=wybor)
+            glos.save()
+            print("Dodano oddany glos")
+        else:
+            print("Lista voters nie pusta")
+            for voter in voters:
+                if voter.user.username == myuser.username:
+                    print("Istnieje glosujacy")
+                    return HttpResponseRedirect(reverse('polls:results', args=(wybor.id,)))
+                else:
+                    print("Nie istenieje glosujacy")
+                    myosoba = Osoba.objects.get(imie='Jan')
+                    upraw = Uprawniony.objects.last()
+                    glos = Oddany_glos(user=myuser, dataOddaniaGlosu=cur, uprawniony=upraw, wybor=wybor)
+                    glos.save()
+
         selected_candidate.votes += 1
         selected_candidate.save()
         return HttpResponseRedirect(reverse('polls:results', args=(wybor.id,)))

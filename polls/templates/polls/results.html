@@ -5,7 +5,7 @@
 
 <ul>
 {% for x in wybor.kandydat_set.all %}
-    <li>{{ x.wybor.nazwisko }} -- {{ x.votes }} vote{{ x.votes|pluralize }}</li>
+    <li>{{ x.osoba.nazwisko }} -- {{ x.votes }} vote{{ x.votes|pluralize }}</li>
 {% endfor %}
 </ul>
 
