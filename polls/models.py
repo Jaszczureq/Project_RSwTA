@@ -84,6 +84,7 @@ class Kandydat(models.Model):
 
     class Meta:
         verbose_name_plural = "Kandydaci"
+        ordering = ['-votes']
 
 
 class Uprawniony(models.Model):

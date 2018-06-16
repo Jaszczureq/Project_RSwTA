@@ -7,5 +7,6 @@ urlpatterns = [
     path('', views.VoteListView.as_view(), name='list'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
+    path('<int:pk>/results/pdf', views.ResultsViewPdf.as_view(), name='results-pdf'),
     path('<int:wybor_id>/vote/', views.vote, name='vote'),
 ]

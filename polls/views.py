@@ -7,6 +7,9 @@ from django.views import generic
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 
+from Project_RSwTA.utils import render_to_pdf
+from django.http import HttpResponse
+
 from Project_RSwTA.forms import SignUpForm
 from .models import *
 
@@ -75,6 +78,18 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Wybor
     template_name = 'polls/results.html'
+
+
+class ResultsViewPdf(generic.DetailView):
+    # model = Wybor
+    # template_name = 'polls/results.html'
+    
+    def get(self, request, *args, **kwargs):
+        model = Wybor
+        pdf = render_to_pdf('polls/results.html', {'wybor': Wybor})
+        return HttpResponse(pdf, content_type='application/pdf')
+        # model = Wybor
+        # template_name = 'polls/results.html'
 
 
 @login_required
