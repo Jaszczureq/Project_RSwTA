@@ -111,7 +111,7 @@ def vote(request, wybor_id):
                     print("Nie istenieje glosujacy")
                     myosoba = Osoba.objects.get(imie='Jan')
                     upraw = Uprawniony.objects.last()
-                    glos = Oddany_glos(user=myuser, dataOddaniaGlosu=cur, uprawniony=upraw, wybor=wybor)
+                    glos = Oddany_glos(user=myuser, dataOddaniaGlosu=cur, wybor=wybor)
                     glos.save()
 
         selected_candidate.votes += 1

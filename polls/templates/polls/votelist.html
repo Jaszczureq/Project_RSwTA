@@ -8,8 +8,13 @@
 {% if latest_wybor_list %}
 	<ul>
 	{% for wybor in latest_wybor_list %}
-		<li><a href="{% url 'polls:detail' wybor.id %}">{{ wybor.nazwa }}</a>
-		</li>
+		{% if wybor.status == 0 %}
+			<li><a href="{% url 'polls:detail' wybor.id %}">{{ wybor.nazwa }}</a>
+			</li>
+		{% else %}
+			<li><a href="{% url 'polls:results' wybor.id %}">{{ wybor.nazwa }}</a>
+			</li>
+		{% endif %}
 	{% endfor %}
 	</ul>
 {% else %}

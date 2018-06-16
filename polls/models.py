@@ -100,7 +100,7 @@ class Uprawniony(models.Model):
 class Oddany_glos(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
     dataOddaniaGlosu = models.DateTimeField('data oddania glosu')
-    uprawniony = models.OneToOneField(Uprawniony, on_delete=models.CASCADE, null=True, unique=False)
+    # uprawniony = models.OneToOneField(Uprawniony, on_delete=models.CASCADE, null=True, unique=False)
     wybor = models.ForeignKey(Wybor, on_delete=models.CASCADE)
 
     @classmethod
