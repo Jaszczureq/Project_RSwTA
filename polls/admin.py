@@ -20,7 +20,7 @@ class AdresAdmin(admin.ModelAdmin):
 
 
 class KandydatAdmin(admin.ModelAdmin):
-    fields = ['osoba', 'wybor']
+    fields = ['osoba', 'wybor', 'votes']
 
 
 admin.site.register(Kraj, KrajAdmin)
