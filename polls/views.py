@@ -55,8 +55,7 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         login(request, user)
-        # return redirect('home')
-        return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+        return HttpResponseRedirect('/')
     else:
         return HttpResponse('Activation link is invalid!')
 
@@ -68,9 +67,37 @@ def hola(request):
         return HttpResponseRedirect('/')
 
 
+#
+#
+# def move_users(self, request):
+#     current_time = timezone.now()
+#     current_time_delta = timezone.now() - timezone.timedelta(minutes=10)
+#
+#     crit1 = Q(date_of_registration_field__lt=current_time)
+#     crit2 = Q(date_of_registration_field__gt=current_time_delta)
+#
+#     users = list(User.objects.filter(crit1 & crit2))
+#
+#     for user in users:
+#         print("Nowo dodany uzytkownik: " + user.username)
+
+
 class IndexView(generic.TemplateView):
     model = Kraj
     template_name = 'index.html'
+
+    print("Wypisywanie nowych użytkowników")
+    current_time = timezone.now()
+    current_time_delta = timezone.now() - timezone.timedelta(minutes=10)
+
+    crit1 = Q(date_joined__lt=current_time)
+    crit2 = Q(date_joined__gt=current_time_delta)
+
+    users = list(User.objects.filter(crit1 & crit2))
+
+    for user in users:
+        print("Nowo dodany uzytkownik: " + user.username)
+        # upraw = Uprawniony.objects.get(osoba == 'admin')
 
 
 @method_decorator(login_required, name='dispatch')
