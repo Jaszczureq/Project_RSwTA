@@ -16,7 +16,7 @@
 			<li><a href="{% url 'polls:detail' wybor.id %}">{{ wybor.nazwa }}</a>
 			</li>
 		{% else %}
-			<li><a href="{% url 'polls:results-pdf' wybor.id %}">{{ wybor.nazwa }}</a>
+			<li><a href="{% url 'polls:results' wybor.id %}">{{ wybor.nazwa }}</a>
 			</li>
 		{% endif %}
 	{% endfor %}

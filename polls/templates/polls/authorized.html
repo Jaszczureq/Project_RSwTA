@@ -1,51 +1,56 @@
 {% extends 'base.html' %}
-
-{% block content %}
 {% load static %}
 {% load some_math %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
-
+{% block content %}
 {% with wybor.uprawniony_set.all as voters %}
 {% with wybor.oddany_glos_set.all as votes %}
 
 {% if voters|first is None %}
-	<p>No voters are authorized.</p>
+<div class="row">
+    <div class="col-lg-6">
+        <h2>No voters are authorized.</h2>
+    </div>
+</div>
 {% else %}
-    Lista uprawnionych: </br>
-    {% for x in voters %}
-        <li>
-            {{x.osoba.first_name}} {{x.osoba.last_name}}
-        </li>
-    {% endfor %}
+<div class="row">
+    <div class="col-lg-6">
+    <h2>Lista uprawnionych:</h2> 
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6">
+        {% for x in voters %}
+        <div class="row">
+            <div class="col-lg-12">
+                    <h4>{{x.osoba.first_name}} {{x.osoba.last_name}}</h4>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>    
+<div class="row">
+        <div class="col-lg-6">
+        <h2>Lista oddanych głosow:</h2> 
+        </div>
+</div>
+<div class="row">
+        <div class="col-lg-6">
+            {% for y in votes %}
+            <div class="row">
+                <div class="col-lg-12">
+                        <h4>{{y.author.first_name}} {{y.author.last_name}}</h4>
+                </div>
+            </div>
+            {% endfor %}
+    </div>
+</div> 
 
-    Lista oddanych głosow: </br>
-    {% for y in votes %}
-        <li>
-            {{y.author.first_name}} {{y.author.last_name}}
-        </li>
-    {% endfor %}
 
-
-<li>Frekwencja: {{ votes.count|mul:100|div:voters.count }}%</li>
+<!-- <li>Frekwencja: {{ votes.count|mul:100|div:voters.count }}%</li> -->
 {% endif %}
 {% endwith %}
 {% endwith %}
-<!--{% if authorized_list %}-->
-	<!--<ul>-->
-	<!--{% for voter in wybor.uprawniony_set.all %}-->
-		<!--{% if candidate.status == 0 %}-->
-        <!--<li><a href="{% url 'polls:detail' wybor.id %}">{{ wybor.nazwa }}</a>-->
-        <!--<li> {{voter.osoba.username}}-->
-        <!--</li>-->
-		<!--{% else %}-->
-			<!--<li><a href="{% url 'polls:results-pdf' wybor.id %}">{{ wybor.nazwa }}</a>-->
-			<!--</li>-->
-		<!--{% endif %}-->
-	<!--{% endfor %}-->
-	<!--</ul>-->
-<!--{% else %}-->
-	<!--<p>No voters are authorized.</p>-->
-<!--{% endif %}-->
+
 
 {% endblock %}
