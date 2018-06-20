@@ -27,7 +27,7 @@ def signup(request):
             user = form.save(commit=False)
             user.save()
             current_site = get_current_site(request)
-            mail_subject = 'Activate your blog account.'
+            mail_subject = 'Activate your eVoting account.'
             message = render_to_string('registration/acc_activate_email.html', {
                 'user': user,
                 'domain': current_site.domain,
