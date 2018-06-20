@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bootstrap3',
     'xhtml2pdf',
+    # 'some_math',
     
 ]
 

@@ -5,6 +5,10 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}" />
 
+<!--<form action="{% url 'polls:move' %}" method="POST">-->
+    <!--<input id="submit" type="button" value="Click" />-->
+<!--</form>-->
+
 {% if latest_wybor_list %}
 	<ul>
 	{% for wybor in latest_wybor_list %}

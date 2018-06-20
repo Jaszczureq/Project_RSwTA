@@ -12,6 +12,7 @@ from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import generic
+import subprocess
 
 from Project_RSwTA.forms import SignUpForm
 from Project_RSwTA.utils import render_to_pdf
@@ -61,32 +62,14 @@ def activate(request, uidb64, token):
 
 
 def hola(request):
+    print('dupa')
     if request.user.is_superuser:
         return HttpResponseRedirect('/admin/')
     else:
         return HttpResponseRedirect('/')
 
 
-#
-#
-# def move_users(self, request):
-#     current_time = timezone.now()
-#     current_time_delta = timezone.now() - timezone.timedelta(minutes=10)
-#
-#     crit1 = Q(date_of_registration_field__lt=current_time)
-#     crit2 = Q(date_of_registration_field__gt=current_time_delta)
-#
-#     users = list(User.objects.filter(crit1 & crit2))
-#
-#     for user in users:
-#         print("Nowo dodany uzytkownik: " + user.username)
-
-
-class IndexView(generic.TemplateView):
-    model = Kraj
-    template_name = 'index.html'
-
-    print("Wypisywanie nowych użytkowników")
+def move_users(request):
     current_time = timezone.now()
     current_time_delta = timezone.now() - timezone.timedelta(minutes=10)
 
@@ -95,9 +78,18 @@ class IndexView(generic.TemplateView):
 
     users = list(User.objects.filter(crit1 & crit2))
 
+    print("Funkcja dziala poprawnie")
     for user in users:
         print("Nowo dodany uzytkownik: " + user.username)
-        # upraw = Uprawniony.objects.get(osoba == 'admin')
+
+    return HttpResponse('/')
+
+
+class IndexView(generic.TemplateView):
+    model = Kraj
+    template_name = 'index.html'
+
+    # subprocess.call('start', shell=True)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -132,6 +124,11 @@ class VoteListView(generic.ListView):
         crit1 = Q(status="0")
         crit2 = Q(status="1")
         return Wybor.objects.filter(crit1 | crit2)
+
+
+class AuthorizedListsView(generic.DetailView):
+    model = Wybor
+    template_name = 'polls/authorized.html'
 
 
 @method_decorator(login_required, name='dispatch')
