@@ -152,8 +152,56 @@ class ResultsViewPdf(generic.DetailView):
         return HttpResponse(pdf, content_type='application/pdf')
 
 
+def take_time(request, pk):
+    if request.method == 'GET':
+        current_time = timezone.now()
+        # shared_obj = request.session.get('myobj', {})
+        # shared_obj['key'] = 'val'
+        # request.session['myobj'] = current_time
+
+        print('Print time in take_time view', current_time)
+
+        return HttpResponseRedirect(reverse('polls:detail', args=(pk,)))
+
+
+def checkStatus(request):
+    if request.method == 'GET':
+        wybor_set = Wybor.objects.all().order_by('-id')
+        wybors = list(wybor_set)
+        cur = timezone.now()
+        # delta=timezone.timedelta
+
+        for i in wybors:
+            print("Jestem w pętli")
+            print(cur)
+            print(i.dataRozpoczecia)
+            print(i.dataZakonczenia)
+            if cur > i.dataRozpoczecia:
+                if cur < i.dataZakonczenia:
+                    i.status = 0
+                    i.save()
+                    print("Zmiana statusu na 0")
+                else:
+                    i.status = 1
+                    i.save()
+                    print("Zmiana statusu na 1")
+            else:
+                i.status = -1
+                i.save()
+                print("Zmiana statusu na -1")
+
+    return HttpResponseRedirect(reverse('polls:list'))
+
+
 @login_required
 def vote(request, wybor_id):
+    # shared_obj = request.session.get('myobj', {})
+    if not shared_obj:
+        print("No shared_obj")
+    else:
+        value = shared_obj['key']
+        print('Shared_obj val: ', value)
+
     try:
         wybor = get_object_or_404(Wybor, pk=wybor_id)
         print(str(wybor.id) + ' ' + wybor.nazwa)
